@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apoia+ | Escolha seu Perfil</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Metade Esquerda - ONG -->
+    <div class="side left" id="ong">
+      <div class="content">
+        <h1>Sou ONG</h1>
+        <button onclick="window.location.href='cadastrarOng.html'">Selecionar</button>
+      </div>
+    </div>
+
+    <!-- Metade Direita - Voluntário -->
+    <div class="side right" id="voluntario">
+      <div class="content">
+        <h1>Sou Voluntário</h1>
+        <button onclick="window.location.href='cadastrarVoluntario.html'">Selecionar</button>
+      </div>
+    </div>
+
+    <!-- Imagem sobreposta -->
+    <div class="overlay">
+      <img src="img/images.png" alt="Apoia+ Capa">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

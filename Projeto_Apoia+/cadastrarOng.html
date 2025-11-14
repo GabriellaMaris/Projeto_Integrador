@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Cadastro de ONG | Apoia+</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-image">
+      <img src="img/undraw_shopping_re_3wst.svg" alt="Cadastrar ONG" draggable="false">
+    </div>
+
+    <div class="form">
+      <form action="#">
+        <div class="form-header">
+          <div class="title">
+            <h1>Cadastro de ONG</h1>
+          </div>
+          <div class="login-button">
+            <button><a href="#">Entrar</a></button>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-box">
+            <label for="nomeOng">Nome da ONG</label>
+            <input id="nomeOng" type="text" name="nomeOng" placeholder="Digite o nome da ONG" required>
+          </div>
+
+          <div class="input-box">
+            <label for="cnpj">CNPJ</label>
+            <input id="cnpj" type="text" name="cnpj" placeholder="00.000.000/0000-00" required>
+          </div>
+
+          <div class="input-box">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" name="email" placeholder="Digite o e-mail da ONG" required>
+          </div>
+
+          <div class="input-box">
+            <label for="telefone">Telefone</label>
+            <input id="telefone" type="tel" name="telefone" placeholder="(xx) xxxx-xxxx" required>
+          </div>
+
+          <div class="input-box">
+            <label for="endereco">Endereço</label>
+            <input id="endereco" type="text" name="endereco" placeholder="Rua, número, bairro, cidade" required>
+          </div>
+
+          <div class="input-box">
+            <label for="areaAtuacao">Área de Atuação</label>
+            <input id="areaAtuacao" type="text" name="areaAtuacao" placeholder="Ex: Educação, Meio Ambiente, Saúde..." required>
+          </div>
+
+          <div class="input-box">
+            <label for="responsavel">Responsável</label>
+            <input id="responsavel" type="text" name="responsavel" placeholder="Nome do responsável" required>
+          </div>
+
+          <div class="input-box">
+            <label for="senha">Senha</label>
+            <input id="senha" type="password" name="senha" placeholder="Digite uma senha" required>
+          </div>
+
+          <div class="input-box">
+            <label for="confirmSenha">Confirme sua Senha</label>
+            <input id="confirmSenha" type="password" name="confirmSenha" placeholder="Digite novamente a senha" required>
+          </div>
+        </div>
+
+        <div class="continue-button">
+          <button><a href="#">Cadastrar</a></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
