@@ -5,112 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doação | Apoia+</title>
     <link rel="stylesheet" href="doacao.css">
+
 </head>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 <body>
+
     <div class="container">
         <div class="form-image">
-            <img src="img/íconeDOE.png" alt="Doação" draggable="false">
+            <img src="https://placehold.co/600x400/f0efff/6c63ff?text=Apoia%2B" alt="Doação" draggable="false">
         </div>
 
         <div class="form">
             <div class="form-header">
-                <div class="title">
-                    <h1>Faça sua Doação</h1>
-                </div>
+                <h1>Faça sua Doação</h1>
             </div>
 
-            <form action="#">
+            <form id="donationPaymentForm">
                 <div class="input-group">
+
                     <div class="input-box">
-                        <label for="valor">Valor da Doação</label>
-                        <input id="valor" type="number" name="valor" placeholder="Digite o valor (R$)" required>
+                        <label for="valor">Valor da Doação (R$)</label>
+                        <input id="valor" type="number" name="valor" placeholder="Digite o valor (R$)" value="10" required>
                     </div>
 
                     <div class="input-box valores-rapidos">
                         <label>Valores Rápidos</label>
                         <div class="botoes-valores">
-                            <button type="button">R$10</button>
-                            <button type="button">R$20</button>
-                            <button type="button">R$50</button>
-                            <button type="button">R$100</button>
+                            <button type="button" data-valor="10">R$10</button>
+                            <button type="button" data-valor="20">R$20</button>
+                            <button type="button" data-valor="50">R$50</button>
+                            <button type="button" data-valor="100">R$100</button>
                         </div>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="identificationNumber">CPF</label>
+                        <input id="identificationNumber" type="text" value="12345678909" required>
                     </div>
 
                     <div class="input-box">
                         <label>Forma de Pagamento</label>
                         <div class="pagamento-group">
-                            <label><input type="radio" name="pagamento" value="pix"> Pix</label>
-                            <label><input type="radio" name="pagamento" value="credito"> Crédito</label>
-                            <label><input type="radio" name="pagamento" value="debito"> Débito</label>
+                            <label><input type="radio" name="paymentMethod" value="pix" checked> Pix</label>
+                            <label><input type="radio" name="paymentMethod" value="debit"> Cartão de Débito</label>
+                            <label><input type="radio" name="paymentMethod" value="credit"> Cartão de Crédito</label>
                         </div>
                     </div>
 
-                    <div class="input-box">
-                        <label>Frequência da Doação</label>
-                        <select name="frequencia" required>
-                            <option value="" disabled selected>Selecione</option>
-                            <option value="mensal">Mensal</option>
-                            <option value="trimestral">Trimestral</option>
-                            <option value="semestral">Semestral</option>
-                            <option value="anual">Anual</option>
-                            <option value="unica">Apenas uma vez</option>
-                        </select>
+                    <div id="card-fields" style="display:none;">
+
+                        <div class="input-box">
+                            <label>Número do Cartão</label>
+                            <div id="cardNumber" class="mp-input"></div>
+                        </div>
+
+                        <div class="input-box-row">
+                            <div class="input-box" style="width: 48%">
+                                <label>Validade</label>
+                                <div id="expirationDate" class="mp-input"></div>
+                            </div>
+                            <div class="input-box" style="width: 48%">
+                                <label>CVV</label>
+                                <div id="securityCode" class="mp-input"></div>
+                            </div>
+                        </div>
+
+                        <div class="input-box">
+                            <label>Nome no Cartão</label>
+                            <input id="cardholderName" class="mp-input-text" placeholder="Como está no cartão">
+                        </div>
+
+                        <div class="input-box" id="installments-box" style="display:none;">
+                            <label>Parcelas</label>
+                            <select id="installments" class="mp-input-text"></select>
+                        </div>
+
+                        <input type="hidden" id="cardToken">
+                        <input type="hidden" id="paymentMethodId">
+                        <input type="hidden" id="issuer">
                     </div>
+
                 </div>
 
                 <div class="continue-button">
-                    <button type="submit">Confirmar Doação</button>
+                    <button type="submit" id="submit-button">Confirmar Doação</button>
                 </div>
             </form>
+
+            <div id="loading" class="result-box loading" style="display:none;">Processando...</div>
+            <div id="pix-result" class="result-box" style="display:none;"></div>
+            <div id="card-result" class="result-box" style="display:none;"></div>
+
         </div>
     </div>
-
-    <script>
-        // Preenche o campo de valor ao clicar nos botões rápidos
-        const botoes = document.querySelectorAll('.botoes-valores button');
-        const inputValor = document.getElementById('valor');
-        botoes.forEach(botao => {
-            botao.addEventListener('click', () => {
-                const valor = botao.textContent.replace('R$', '');
-                inputValor.value = valor;
-            });
-        });
-
-        // Impede valores negativos e força mínimo de 5
-        inputValor.addEventListener('input', () => {
-            if (inputValor.value < 5) {
-                inputValor.value = 5;
-            }
-        });
-
-        // Cria o pop-up
-        const popup = document.createElement('div');
-        popup.className = 'popup';
-        popup.innerHTML = `
-            <div class="popup-content">
-                <h2>🎉 Obrigado pela sua doação!</h2>
-                <p>Seu apoio ajuda a transformar vidas 💜</p>
-                <button id="closePopup">Fechar</button>
-            </div>
-        `;
-        document.body.appendChild(popup);
-
-        // Mostra o pop-up ao confirmar
-        const form = document.querySelector('form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (inputValor.value >= 5) {
-                popup.style.display = 'flex';
-            }
-        });
-
-        // Fecha o pop-up
-        document.body.addEventListener('click', (e) => {
-            if (e.target.id === 'closePopup' || e.target === popup) {
-                popup.style.display = 'none';
-                form.reset();
-            }
-        });
-    </script>
+ <script src="https://sdk.mercadopago.com/js/v2"></script>
+ <script src="doacao.js"></script>
 </body>
 </html>
