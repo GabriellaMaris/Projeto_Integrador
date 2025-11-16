@@ -5,100 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doação | Apoia+</title>
     <link rel="stylesheet" href="doacao.css">
-
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
-<script src="https://sdk.mercadopago.com/js/v2"></script>
+
 <body>
 
-    <div class="container">
-        <div class="form-image">
-            <img src="https://placehold.co/600x400/f0efff/6c63ff?text=Apoia%2B" alt="Doação" draggable="false">
+<div class="container">
+    <div class="form-image">
+        <img src="https://placehold.co/600x600/f0efff/6c63ff?text=Apoia%2B" draggable="false">
+    </div>
+
+    <div class="form">
+        <div class="form-header">
+            <h1>Faça sua Doação</h1>
         </div>
 
-        <div class="form">
-            <div class="form-header">
-                <h1>Faça sua Doação</h1>
+        <form id="donationPaymentForm">
+            <div class="input-group">
+
+                <div class="input-box">
+                    <label>Valor da Doação (R$)</label>
+                    <input id="valor" type="number" value="10" required>
+                </div>
+
+                <div class="input-box valores-rapidos">
+                    <label>Valores Rápidos</label>
+                    <div class="botoes-valores">
+                        <button type="button" data-valor="10">R$10</button>
+                        <button type="button" data-valor="20">R$20</button>
+                        <button type="button" data-valor="50">R$50</button>
+                        <button type="button" data-valor="100">R$100</button>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <label>CPF</label>
+                    <input id="identificationNumber" type="text" value="12345678909" required>
+                </div>
+
+                <div class="input-box">
+                    <label>Frequência da Doação</label>
+                    <select id="frequencia" required>
+                        <option value="unica" selected>Apenas uma vez</option>
+                        <option value="mensal">Mensal</option>
+                        <option value="trimestral">Trimestral</option>
+                        <option value="semestral">Semestral</option>
+                        <option value="anual">Anual</option>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <label>Forma de Pagamento</label>
+                    <div class="pagamento-group">
+                        <label><input type="radio" name="paymentMethod" value="pix" checked> Pix</label>
+                        <label><input type="radio" name="paymentMethod" value="debit"> Débito</label>
+                        <label><input type="radio" name="paymentMethod" value="credit"> Crédito</label>
+                    </div>
+                </div>
+
+                <div id="card-fields" style="display:none;">
+
+                    <div class="input-box">
+                        <label>Número do Cartão</label>
+                        <div id="cardNumber" class="mp-input"></div>
+                    </div>
+
+                    <div class="input-box-row">
+                        <div class="input-box" style="width:48%;">
+                            <label>Validade</label>
+                            <div id="expirationDate" class="mp-input"></div>
+                        </div>
+                        <div class="input-box" style="width:48%;">
+                            <label>CVV</label>
+                            <div id="securityCode" class="mp-input"></div>
+                        </div>
+                    </div>
+
+                    <div class="input-box">
+                        <label>Nome no Cartão</label>
+                        <input id="cardholderName" class="mp-input-text">
+                    </div>
+
+                    <div class="input-box" id="installments-box" style="display:none;">
+                        <label>Parcelas</label>
+                        <select id="installments" class="mp-input-text"></select>
+                    </div>
+
+                    <input type="hidden" id="cardToken">
+                    <input type="hidden" id="paymentMethodId">
+                    <input type="hidden" id="issuer">
+
+                </div>
+
             </div>
 
-            <form id="donationPaymentForm">
-                <div class="input-group">
+            <div class="continue-button">
+                <button type="submit" id="submit-button">Confirmar Doação</button>
+            </div>
+        </form>
 
-                    <div class="input-box">
-                        <label for="valor">Valor da Doação (R$)</label>
-                        <input id="valor" type="number" name="valor" placeholder="Digite o valor (R$)" value="10" required>
-                    </div>
+        <div id="loading" class="result-box loading" style="display:none;">Processando...</div>
+        <div id="pix-result" class="result-box" style="display:none;"></div>
+        <div id="card-result" class="result-box" style="display:none;"></div>
 
-                    <div class="input-box valores-rapidos">
-                        <label>Valores Rápidos</label>
-                        <div class="botoes-valores">
-                            <button type="button" data-valor="10">R$10</button>
-                            <button type="button" data-valor="20">R$20</button>
-                            <button type="button" data-valor="50">R$50</button>
-                            <button type="button" data-valor="100">R$100</button>
-                        </div>
-                    </div>
-
-                    <div class="input-box">
-                        <label for="identificationNumber">CPF</label>
-                        <input id="identificationNumber" type="text" value="12345678909" required>
-                    </div>
-
-                    <div class="input-box">
-                        <label>Forma de Pagamento</label>
-                        <div class="pagamento-group">
-                            <label><input type="radio" name="paymentMethod" value="pix" checked> Pix</label>
-                            <label><input type="radio" name="paymentMethod" value="debit"> Cartão de Débito</label>
-                            <label><input type="radio" name="paymentMethod" value="credit"> Cartão de Crédito</label>
-                        </div>
-                    </div>
-
-                    <div id="card-fields" style="display:none;">
-
-                        <div class="input-box">
-                            <label>Número do Cartão</label>
-                            <div id="cardNumber" class="mp-input"></div>
-                        </div>
-
-                        <div class="input-box-row">
-                            <div class="input-box" style="width: 48%">
-                                <label>Validade</label>
-                                <div id="expirationDate" class="mp-input"></div>
-                            </div>
-                            <div class="input-box" style="width: 48%">
-                                <label>CVV</label>
-                                <div id="securityCode" class="mp-input"></div>
-                            </div>
-                        </div>
-
-                        <div class="input-box">
-                            <label>Nome no Cartão</label>
-                            <input id="cardholderName" class="mp-input-text" placeholder="Como está no cartão">
-                        </div>
-
-                        <div class="input-box" id="installments-box" style="display:none;">
-                            <label>Parcelas</label>
-                            <select id="installments" class="mp-input-text"></select>
-                        </div>
-
-                        <input type="hidden" id="cardToken">
-                        <input type="hidden" id="paymentMethodId">
-                        <input type="hidden" id="issuer">
-                    </div>
-
-                </div>
-
-                <div class="continue-button">
-                    <button type="submit" id="submit-button">Confirmar Doação</button>
-                </div>
-            </form>
-
-            <div id="loading" class="result-box loading" style="display:none;">Processando...</div>
-            <div id="pix-result" class="result-box" style="display:none;"></div>
-            <div id="card-result" class="result-box" style="display:none;"></div>
-
-        </div>
     </div>
- <script src="https://sdk.mercadopago.com/js/v2"></script>
- <script src="doacao.js"></script>
+</div>
+
+<script src="doacao.js"></script>
+
 </body>
 </html>

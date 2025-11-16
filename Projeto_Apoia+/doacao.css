@@ -17,7 +17,6 @@ body {
     padding: 2rem 0;
 }
 
-/* CONTAINER */
 .container {
     width: 80%;
     max-width: 1100px;
@@ -28,7 +27,6 @@ body {
     overflow: hidden;
 }
 
-/* LADO ESQUERDO */
 .form-image {
     width: 50%;
     background: #f0efff;
@@ -42,7 +40,6 @@ body {
     max-width: 450px;
 }
 
-/* FORMULÁRIO */
 .form {
     width: 50%;
     padding: 2.5rem;
@@ -57,7 +54,6 @@ body {
     color: #6c63ff;
 }
 
-/* INPUTS */
 .input-box {
     display: flex;
     flex-direction: column;
@@ -81,7 +77,6 @@ body {
     gap: .5rem;
 }
 
-/* BOTÕES */
 .valores-rapidos button {
     background: #6c63ff;
     color: #fff;
@@ -90,17 +85,16 @@ body {
     border-radius: 6px;
     cursor: pointer;
 }
+
 .valores-rapidos button:hover {
-    background: #5a54e6;
+    background: #554fe6;
 }
 
-/* MÉTODOS */
 .pagamento-group {
     display: flex;
     gap: 1.2rem;
 }
 
-/* CAMPOS DO CARTÃO */
 #card-fields {
     display: flex;
     flex-direction: column;
@@ -115,27 +109,32 @@ body {
     padding: .4rem;
 }
 
+.mp-input-text {
+    padding: .85rem;
+    border: 2px solid #6c63ff;
+    border-radius: 8px;
+}
+
 .input-box-row {
     display: flex;
     gap: 1rem;
 }
 
-/* BOTÃO CONFIRMAR */
 .continue-button button {
     width: 100%;
     background: #6c63ff;
-    color: #fff;
+    color: white;
     padding: 1rem;
     border-radius: 8px;
     border: none;
     font-size: 1rem;
+    cursor: pointer;
 }
 
 .continue-button button:hover {
     background: #564ee8;
 }
 
-/* RESULTADOS */
 .result-box {
     margin-top: 1rem;
     padding: 1rem;
@@ -145,22 +144,17 @@ body {
 }
 
 .loading {
-    background: #fff3cd;
+    background: #fff3cd !important;
 }
 
-.popup {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,.5);
-    display:none;
-    justify-content:center;
-    align-items:center;
-}
-
-.popup-content {
-    background:#fff;
-    padding:2rem;
-    border-radius:10px;
-    text-align:center;
+@media (max-width: 1000px) {
+    .form-image {
+        display: none;
+    }
+    .form {
+        width: 100%;
+    }
+    .container {
+        width: 90%;
+    }
 }
